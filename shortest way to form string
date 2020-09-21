@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int shortestWay(string source, string target) 
+    {
+        string remaining = target;
+        int ans = 0;
+        while(remaining.size() != 0)
+        {
+            int i = 0;
+            int j = 0;
+            int num = 0;
+            while(i<source.size() && j<remaining.size())
+            {
+                if(source[i] == remaining[j])
+                {   num++;
+                    j++;
+                    i++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            //cout<<num;
+            if(num == 0)
+            {
+                return -1;
+            }
+            ++ans;
+           
+            remaining = remaining.substr(j);
+            //cout<<remaining.size();
+            
+        }
+        return ans;
+    }
+};
