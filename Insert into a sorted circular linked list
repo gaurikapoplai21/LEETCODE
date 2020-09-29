@@ -1,0 +1,88 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+    }
+
+    Node(int _val, Node* _next) {
+        val = _val;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* insert(Node* head, int insertVal) 
+    {
+        if(head== NULL)
+        {
+            Node* insert = new Node(insertVal);
+            insert -> next = insert;
+            return insert;
+        }
+        else if(head -> next == head)
+        {
+            Node* insert = new Node(insertVal);
+            head -> next = insert;
+            insert -> next = head;
+            return head;
+            
+        }
+        Node* curr = head;
+        Node* n = curr->next;
+        
+        Node* greatest = NULL;
+        Node* smallest = NULL;
+        while(n != head)
+        {
+            if(n -> val < curr -> val)
+            {   
+                greatest = curr;
+                smallest = n;
+                
+            }
+            if(curr->val <= insertVal && n->val > insertVal) //position is found
+            {   
+                Node* ptr = new Node(insertVal);
+                curr -> next = ptr;
+                ptr -> next = n;
+                return head;
+                
+            }
+            else
+            {   
+                curr = n;
+                n = n->next;
+                
+            }
+            
+        }
+        
+        
+        if((curr->val <= insertVal && n->val > insertVal) || greatest == NULL) //smallest or largest node
+        {
+            Node* ptr = new Node(insertVal);
+            curr -> next = ptr;
+            ptr -> next = n;
+        }
+        else
+        {
+            Node* ptr = new Node(insertVal);
+            greatest -> next = ptr;
+            ptr -> next = smallest;
+            
+        }
+        return head;
+        
+        
+    }
+};
