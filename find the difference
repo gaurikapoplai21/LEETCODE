@@ -1,0 +1,38 @@
+class Solution {
+public:
+    char findTheDifference(string s, string t) 
+    {
+        //anagram O(n) soln O(2n) space
+        /*vector<int> anagram(26,0);
+        vector<int> second(26,0);
+        for(int i=0;i<s.size();i++)
+        {
+            anagram[s[i] - 'a'] += 1;
+            second[t[i] - 'a'] += 1;
+        }
+        second[t[t.size()-1] - 'a'] += 1;
+        for(int i=0;i<26;i++)
+        {   
+            if(second[i] != anagram[i])
+            {   
+                return (i + 'a');
+            }
+        }
+        return 'a';*/
+        //xor soln
+        
+        int xor_res = 0;
+        for(char &c : s)
+        {
+            xor_res ^= (c - 'a');
+        }
+        for(char &c : t)
+        {
+            xor_res ^= (c - 'a');
+        }
+        return xor_res + 'a';
+       
+        
+        
+    }
+};
