@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) 
+    {
+        vector<vector<int>> ans;
+        vector<int> soln;
+        int n = candidates.size();
+        backtrack(ans,soln,n,target,candidates);
+        return ans;
+        
+    }
+    void backtrack(vector<vector<int>>& ans,vector<int>& soln,int n,int target,vector<int> candidates)
+    {
+        if(n == 0 || target < 0)
+        {
+            return;
+        }
+        if(target == 0)
+        {
+            ans.push_back(soln);
+            return;
+        }
+        //not include element
+        backtrack(ans,soln,n-1,target,candidates);
+        //include element
+        soln.push_back(candidates[n-1]);
+        backtrack(ans,soln,n,target-candidates[n-1],candidates);
+        //backtrack
+        soln.pop_back();
+    }
+};
