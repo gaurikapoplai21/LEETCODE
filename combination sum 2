@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) 
+    {
+        sort(candidates.begin(),candidates.end());
+        vector<vector<int>> ans;
+        vector<int> partialsum;
+        int n = 0;
+        backtrack(ans,partialsum,candidates,target,n);
+        vector<vector<int>> fin;
+        /*for(auto& i: ans)
+        {
+            fin.push_back(i);
+        }
+        return fin;*/
+       
+        return ans;
+        
+    }
+    void backtrack(vector<vector<int>>& ans,vector<int>& partialsum,vector<int>& candidates,int target,int n)
+    {   if(target == 0)
+        {   if(find(ans.begin(),ans.end(),partialsum) == ans.end())
+           {
+             ans.push_back(partialsum);
+           }
+            
+            return;
+        }
+        
+        
+        if( (n == candidates.size()) || target < 0)
+        {
+            return;
+        }
+        
+        backtrack(ans,partialsum,candidates,target,n+1);//not choosing the element
+        //cout<<candidates[n]<<" ";
+        partialsum.push_back(candidates[n]);
+        backtrack(ans,partialsum,candidates,(target-candidates[n]),n+1);
+        partialsum.pop_back();
+        return;
+        
+        
+    }
+};
