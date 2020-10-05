@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int numSubarrayProductLessThanK(vector<int>& nums, int k) 
+    {
+         //O(n) soln
+         int ans = 0;
+         int i = 0;
+         while(i < nums.size() && i >= k) //find first number less than k
+         {
+             i++;
+         }
+         int j = i;
+         long long int prod = 1;
+         while(j < nums.size())
+         {   
+             //cout<<prod<<" ";
+             prod = prod*nums[j];
+             if(prod < k)
+             {   
+                 ans += (j-i)+1;
+             }
+             else
+             {
+                 while(i<=j && prod >= k)
+                 {   
+                     prod /= nums[i];
+                     ++i;
+                 }
+                 if(i > j)
+                 {
+                     ans += 0;
+                 }
+                 else
+                 {
+                     ans += (j-i) + 1;
+                 }
+                 
+             }
+             j++;
+         }
+         return ans;
+        
+        
+    }
+};
