@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<string> findItinerary(vector<vector<string>>& tickets) 
+    {
+        unordered_map<string,multiset<string>> adj;
+        stack<string> stk;
+        stk.push("JFK");
+        for(int i=0;i<tickets.size();i++) //adjacency list
+        {
+            adj[tickets[i][0]].insert(tickets[i][1]);
+        }
+        vector<string> ans;
+        while(!stk.empty())
+        {
+            string current = stk.top();
+            //cout<<current<<" ";
+            if(adj[current].size()==0)
+            {   
+                stk.pop();
+                ans.push_back(current);
+            }
+            else
+            {
+                auto next = adj[current].begin();
+                
+                stk.push(*next);
+                adj[current].erase(next);
+                
+            }
+            
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+        
+    }
+};
