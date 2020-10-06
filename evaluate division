@@ -1,0 +1,79 @@
+class Solution {
+public:
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) 
+    {   
+        //path finding where ans is cumulative product of path weights
+        //make graph
+        unordered_map<string,vector<pair<string,double>>> adj;
+        for(int i=0;i<equations.size();i++)
+        {
+            adj[equations[i][0]].push_back(make_pair(equations[i][1],values[i]));
+            adj[equations[i][1]].push_back(make_pair(equations[i][0],(double)1/values[i]));
+        }
+        /*for(auto i:adj)
+        {
+            cout<<i.first<<":"<<" ";
+            for(auto j:i.second)
+            {
+                cout<<j.first<<j.second<<" ";
+            }
+            cout<<"\n";
+        }*/
+         vector<double> ans;
+        //call dfs for each query
+        for(int i=0;i<queries.size();i++)
+        {
+            string source = queries[i][0];
+            string dest = queries[i][1];
+            //cout<<source<<" "<<dest<<" ";
+            unordered_set<string> visited;
+           
+            double x = 1;
+            int n = ans.size();
+            if(adj.count(source)==0 || adj.count(dest) == 0)
+            {
+                ans.push_back(-1);
+            }
+            else
+            {   
+                dfs(adj,source,dest,visited,x,ans,n);
+                
+            }
+            if(ans.size() == n)
+            {
+                ans.push_back(-1);
+            }
+            
+        }
+        
+       
+        return ans;
+        
+    }
+    void dfs(unordered_map<string,vector<pair<string,double>>>& adj,string source,string dest,unordered_set<string>& visited,double x,vector<double>& ans,int n)
+    {
+        if(source == dest)
+        {   
+            ans.push_back(x);
+            return;
+        }
+        visited.insert(source);
+       
+        for(int i=0;i<adj[source].size();i++)
+        {
+            if(find(visited.begin(),visited.end(),adj[source][i].first) == visited.end())
+            {  //cout<<adj[source][i].first<<adj[source][i].second<<" ";
+               dfs(adj,adj[source][i].first,dest,visited,x*adj[source][i].second,ans,n);
+               if(ans.size() == n+1)
+               {
+                   return;
+               }
+    
+                
+            }
+        }
+        return;
+        
+        
+    }
+};
