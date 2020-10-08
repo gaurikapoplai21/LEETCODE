@@ -1,0 +1,49 @@
+class TwoSum {
+public:
+    /** Initialize your data structure here. */
+    vector<int> s;
+    TwoSum() 
+    {
+        
+    }
+    
+    /** Add the number to an internal data structure.. */
+    void add(int number) 
+    {
+        s.push_back(number);
+       
+        
+    }
+    
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
+    bool find(int value) 
+    {
+        int start = 0;
+        int end = s.size() - 1;;
+        sort(s.begin(),s.end());
+        while(start < end)
+        {
+            if(s[start] + s[end] == value)
+            {
+                return true;
+            }
+            else if(s[start] + s[end] < value)
+            {
+                ++start;
+            }
+            else
+            {
+                --end;
+            }
+        }
+        return false;
+        
+    }
+};
+
+/**
+ * Your TwoSum object will be instantiated and called as such:
+ * TwoSum* obj = new TwoSum();
+ * obj->add(number);
+ * bool param_2 = obj->find(value);
+ */
