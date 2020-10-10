@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) 
+    {
+        //check if the lement at ith position != i and is in the range of 1 to n
+        //if its not then cyclically place elements at correct position
+        int n = nums.size();
+        for(int i=1;i<=n;i++)
+        {
+            if(nums[i-1] != i && nums[i-1] >= 1 && nums[i-1] <= n)
+            {
+                //put this at correct position
+                int item = nums[i-1];
+                while(item >= 1 && item <= n && nums[item-1] != item )
+                {
+                    int temp = nums[item-1];
+                    nums[item-1] = item;
+                    item = temp;
+                }
+            }
+        }
+        for(int i=1;i<=n;i++)
+        {
+            if(nums[i-1] != i)
+            {
+                return i;
+            }
+        }
+        return n+1;
+    }
+};
