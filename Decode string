@@ -1,0 +1,73 @@
+class Solution {
+public:
+    string decodeString(string s) 
+    {
+        string ans = "";
+        if(s.size()==0)
+        {
+            return ans;
+        }
+        stack<string> stk;
+        
+        int index = 0;
+        string decoded = "";
+        while(index < s.size())
+        {
+            if(s[index] == ']')
+            {   
+                string temp = "";
+                while(!stk.empty() && stk.top() != "[")
+                {   //cout<<stk.top();
+                    temp += stk.top();
+                    stk.pop();
+                }
+                //reverse(temp.begin(),temp.end());
+                stk.pop();
+                //cout<<stk.top();
+                int digit = stoi(stk.top());
+                stk.pop();
+                string partial="";
+                for(int i=0;i<digit;i++)
+                {
+                    partial += temp;
+                }
+                //cout<<partial;
+                stk.push(partial);
+                
+            }
+            else
+            {   
+               string subs = "";
+               if(isdigit(s[index]))
+               {   //cout<<index;
+                   while(s[index] != '[')
+                   {
+                       subs += s[index];
+                       ++index;
+                   }
+                   --index;
+                   //cout<<subs;
+                   stk.push(subs);
+                  
+               }
+               else
+               {
+                
+                subs += s[index];
+                stk.push(subs);
+               }
+                
+            }
+            ++index;
+                
+        }
+        
+        while(!stk.empty())
+        {
+            decoded += stk.top();
+            stk.pop();
+        }
+        reverse(decoded.begin(),decoded.end());
+        return decoded;
+    }
+};
