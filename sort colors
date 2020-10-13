@@ -1,0 +1,37 @@
+class Solution {
+public:
+    void swap(int i,int j,vector<int>& nums)
+    {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    void sortColors(vector<int>& nums) 
+    {
+        int lastnonzero = 0;
+        int lastnontwo = nums.size() - 1;
+        int curr = 0;
+        while(curr <= lastnontwo)
+        {
+            if(nums[curr] == 0)
+            {
+                swap(curr,lastnonzero,nums);
+                ++lastnonzero;
+                ++curr;
+
+            }
+            else if(nums[curr] == 2)
+            {
+                swap(curr,lastnontwo,nums);
+                --lastnontwo;
+            }
+            else
+            {
+                ++curr;
+            }
+            
+            
+        }
+        
+    }
+};
