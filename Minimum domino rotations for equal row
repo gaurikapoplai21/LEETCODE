@@ -1,0 +1,74 @@
+class Solution {
+public:
+    int minDominoRotations(vector<int>& A, vector<int>& B) 
+    {
+        bool ctr = true;
+        int a = A[0];
+        int b = B[0];
+        int countA = 1;
+        int countB = 0;
+        int ans1 = -1;
+        int ans2 = -1;
+        for(int i=1;i<A.size();i++)
+        {
+            if(A[i] == a)
+            {
+                countA += 1;
+            }
+            if(B[i] == a)
+            {
+                countB += 1;
+            }
+            else if(A[i] != a && B[i] != a)
+            {
+                ctr = false;
+                break;
+            }
+            
+        }
+        
+        if(ctr)
+        {   
+             ans1 =  A.size() - max(countA,countB);
+            
+        }
+        countA = 0;
+        countB = 1;
+        ctr = true;
+        for(int i=1;i<A.size();i++)
+        {
+            if(A[i] == b)
+            {
+                countA += 1;
+            }
+            if(B[i] == b)
+            {
+                countB += 1;
+            }
+            else if(A[i] != b && B[i] != b)
+            {
+                ctr = false;
+                break;
+            }
+            
+        }
+        if(ctr)
+        {
+            ans2 = A.size() - max(countA,countB);
+            cout<<ans2;
+        }
+        if(ans1 != -1 && ans2 != -1)
+        {
+            return min(ans1,ans2);
+        }
+        else if(ans1 != -1 || ans2 != -1)
+        {
+            return max(ans1,ans2);
+        }
+        else
+        {
+            return -1;
+        }
+        
+    }
+};
