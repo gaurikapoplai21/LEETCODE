@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int P) 
+    {
+        int maxscore = 0;
+        int faceup = 0;
+        int facedown = tokens.size() - 1;
+        int score = 0;
+        sort(tokens.begin(),tokens.end());
+        if(tokens.size() == 0 || P < tokens[faceup])
+        {
+            return 0;
+        }
+        while(faceup < facedown)
+        {   //cout<<faceup;
+            while(P >= tokens[faceup])
+            {
+                P = P - tokens[faceup];
+                score += 1;
+                faceup++;
+            }
+            maxscore = max(maxscore,score);
+            if(score > 0)
+            {
+                P += tokens[facedown];
+                facedown--;
+                score -= 1;
+            }
+            //cout<<P;
+        }
+        if(faceup == facedown && P > tokens[faceup])
+        {
+            score += 1;
+            maxscore = max(maxscore,score);
+        }
+        return maxscore;
+        
+    }
+};
