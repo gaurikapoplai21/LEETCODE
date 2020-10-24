@@ -1,0 +1,59 @@
+/**
+ * // This is the ArrayReader's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class ArrayReader {
+ *   public:
+ *     int get(int index);
+ * };
+ */
+
+class Solution {
+public:
+    int search(const ArrayReader& reader, int target) 
+    {
+        //first find some INT_MAX value
+        int low = 0; //length of array is atleast 1
+        int high = 1;
+        while(reader.get(high) != 2147483647)
+        {
+            low = high;
+            high <<= 1;
+        }
+        //cout<<"yo";
+        //find the first occurence of INT_MAX that will be n
+        while(low <= high)
+        {
+            int mid = low + (high-low)/2;
+            if(reader.get(mid) == 2147483647)
+            {
+                high = mid-1;
+            }
+            else
+            {
+                low = mid + 1;
+            }
+        }
+        //cout<<high;
+        int n = high;
+        int start = 0;
+        int end = n;
+        while(start<=end)
+        {
+            int mid = start + (end-start)/2;
+            if(reader.get(mid) == target)
+            {
+                return mid;
+            }
+            else if(target < reader.get(mid))
+            {
+                end = mid - 1;
+            }
+            else
+            {
+                start = mid + 1;
+            }
+        }
+        return -1;
+        
+    }
+};
