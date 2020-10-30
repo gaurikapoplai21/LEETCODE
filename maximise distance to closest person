@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int maxDistToClosest(vector<int>& seats) 
+    {
+        if(seats.size()==0)
+        {
+            return 0;
+        }
+        int ptr1 = -1;
+        int ptr2 = -1;
+        int dist = 0;
+        int maxdist = 0;
+        for(int i=0;i<seats.size();i++)
+        {
+            if(seats[i] == 1)
+            {   
+                ptr1 = ptr2;
+                ptr2 = i;
+               
+                //cout<<ptr1<<" "<<ptr2<<" ";
+            }
+            if(ptr1 != -1)
+            {
+                dist = (ptr1 + ptr2)/2 - ptr1;
+                maxdist = max(dist,maxdist);
+            }
+            else
+            {
+                dist = ptr2;
+                maxdist = max(dist,maxdist);
+            }
+        }
+        int n = seats.size();
+        
+        if(ptr1 == -1)
+        {   
+            maxdist = max(ptr2,(n-1-ptr2));
+        }
+        else
+        {
+            dist = n - ptr2 - 1;
+            maxdist = max(dist,maxdist);
+        }
+        return maxdist;
+        
+    }
+};
