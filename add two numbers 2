@@ -1,0 +1,122 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    struct ListNode* reverselist(struct ListNode* head)
+    {
+       struct ListNode* temp = head;
+       struct ListNode* curr = head;
+       struct ListNode* prev = NULL;
+       struct ListNode* next = NULL;
+       while(curr != NULL)
+       {
+           next = curr->next;
+           curr -> next = prev;
+           prev = curr;
+           curr = next;
+       }
+       
+       
+       return prev;      
+    }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) 
+    {
+        struct ListNode* head1 = reverselist(l1);
+        //cout<<head1 -> val;
+        struct ListNode* head2 = reverselist(l2);
+        //cout<<head2 -> val;
+        struct ListNode* newhead = new ListNode();
+        struct ListNode* temp = newhead;
+        int carry = 0;
+        while(head1 && head2)
+        {   
+            int x = head1->val + head2->val + carry;
+            if(x > 9)
+            {
+                carry = 1;
+                x = x%10;
+                
+            }
+            else
+            {
+                carry = 0;
+            }
+            //cout<<x<<" ";
+            newhead -> val = x;
+            newhead -> next = new ListNode();
+            newhead = newhead->next;
+            head1 = head1->next;
+            head2 = head2->next;
+        }
+        
+        if(head1)
+        {   
+            while(head1)
+            {
+            int x = head1->val + carry;
+            if(x > 9)
+            {
+                carry = 1;
+                x = x%10;
+                
+            }
+            else
+            {
+                carry = 0;
+            }
+            newhead->val = x;
+            newhead -> next = new ListNode();
+            newhead = newhead->next;
+            head1 = head1->next;
+            }
+        }
+        else if(head2)
+        {   //cout<<"ho";
+            while(head2)
+            {
+              int x = head2->val + carry;
+              if(x > 9)
+              {
+                carry = 1;
+                x = x%10;
+                
+              }
+              else
+            {
+                carry = 0;
+            }
+            newhead->val = x;
+            newhead -> next = new ListNode();
+            newhead = newhead->next;
+            head2 = head2->next;
+                
+            }
+        }
+        if(carry)
+        {
+            newhead->val = carry;
+            newhead->next = NULL;
+        }
+        struct ListNode* fin = reverselist(temp);
+        if(fin -> val == 0)
+        {
+            struct ListNode* a = fin;
+            fin = fin->next;
+            a->next = NULL;
+            delete(a);
+        }
+        
+        //delete(newhead);
+       
+        return fin;
+        
+    }
+};
