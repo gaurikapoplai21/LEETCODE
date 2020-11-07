@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int numWays(int n, int k) 
+    {
+        if(n==0)
+        {
+            return 0;
+        }
+        else if(n==1)
+        {
+            return k;
+        }
+        vector<vector<int>> dp(n-1,vector<int>(3));
+        dp[0][0] = k;
+        dp[0][1] = k*(k-1);
+        dp[0][2] = dp[0][0] + dp[0][1];
+        for(int i=1;i<=n-2;i++)
+        {
+            dp[i][0] = dp[i-1][1];
+            dp[i][1] = dp[i-1][2]*(k-1);
+            dp[i][2] = dp[i][0] + dp[i][1];
+            
+        }
+        return dp[n-2][2];
+        
+    }
+};
