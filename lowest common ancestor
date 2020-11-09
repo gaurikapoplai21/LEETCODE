@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
+    {
+        if(!root)
+        {
+            return NULL;
+        }
+        else if(root->val == p->val)
+        {
+            return p;
+        }
+        else if(root->val == q->val)
+        {
+            return q;
+        }
+        else
+        {
+            struct TreeNode* left = lowestCommonAncestor(root->left,p,q);
+            struct TreeNode* right = lowestCommonAncestor(root->right,p,q);
+            if( (left == p && right == q) || (left == q && right == p))
+            {
+                return root;
+            }
+            else if(left)
+            {
+                return left;
+            }
+            else if(right)
+            {
+                return right;
+            }
+            else
+            {
+                return NULL;
+            }
+        }
+
+        
+    }
+};
