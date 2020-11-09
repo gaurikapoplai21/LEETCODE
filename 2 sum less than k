@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int twoSumLessThanK(vector<int>& A, int K) 
+    {
+        sort(A.begin(),A.end());
+        int first = 0;
+        int second = A.size() - 1;
+        set<int> feasible;
+        while(first < second)
+        {
+            if(A[first] + A[second] < K)
+            {
+                feasible.insert(A[first] + A[second]);
+                first++;
+            }
+            else
+            {
+                second--;
+            }
+        }
+        if(feasible.size() == 0)
+        {
+            return -1;
+        }
+        set<int> :: iterator it = feasible.end();
+        --it;
+        return *it;
+        
+    }
+};
