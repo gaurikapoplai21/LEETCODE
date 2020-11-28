@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    int f(struct TreeNode* root,unordered_map<struct TreeNode*,int>& tbl)
+    {
+        
+        if(!root)
+        {
+            return 0;
+        }
+        if(tbl.find(root) != tbl.end())
+        {
+            return tbl[root];
+        }
+        int without = f(root->left,tbl) + f(root->right,tbl);
+        int with = root->val;
+        if(root->left)
+        {
+            with += f(root->left->left,tbl) + f(root->left->right,tbl);
+        }
+        if(root->right)
+        {
+            with += f(root->right->left,tbl) + f(root->right->right,tbl);
+        }
+        tbl[root]  = max(with,without);
+        return tbl[root];
+    }
+    int rob(TreeNode* root) 
+    {
+        
+        unordered_map<struct TreeNode* ,int> tbl;
+        f(root,tbl);
+        return tbl[root];
+        
+        
+    }
+};
