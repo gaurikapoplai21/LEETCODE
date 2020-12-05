@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool memoize(vector<int>& arr,int start,vector<bool>& mem)
+    {   cout<<start<<" ";
+        if(start >= arr.size() || start < 0)
+        {   
+            return false;
+        }
+        else if(arr[start] == 0)
+        {   //mem[start] = true;
+            return true;
+        }
+        else if(mem[start] == true)
+        {
+            return false;
+        }
+        mem[start] = true;
+        bool left = memoize(arr,start - arr[start],mem);
+        bool right = memoize(arr,start + arr[start],mem);
+        return left || right;
+        
+    }
+    bool canReach(vector<int>& arr, int start) 
+    {
+        
+        vector<bool> mem(arr.size(),false);
+        bool val = memoize(arr,start,mem);
+        return val;
+    }
+};
