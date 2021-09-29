@@ -1,0 +1,68 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    vector<ListNode*> splitListToParts(ListNode* head, int k) 
+    {
+        int n = 0;
+        struct ListNode* ptr = head;
+        while(ptr)
+        {
+            n += 1;
+            ptr = ptr->next;
+        }
+        vector<struct ListNode*> l;
+        int each = n/k;
+        int extra = n%k;
+        struct ListNode* curr = head;
+        struct ListNode* start = head;
+        struct ListNode* prev;
+        while(extra--)
+        {
+             prev = NULL;
+             curr = start;
+            int k = each + 1;
+            while(k--)
+            {   
+                prev = curr;
+                curr = curr->next;
+            }
+            prev->next = NULL;
+            l.push_back(start);
+            start = curr;
+        }
+        //prev = NULL;
+       
+        //struct ListNode* curr;
+        while(start)
+        {
+            prev = NULL;
+            curr = start;
+            for(int i = 0; i<each;i++)
+            {
+                prev = curr;
+                curr = curr->next;
+            }
+            prev->next = NULL;
+            l.push_back(start);
+            start = curr;
+            
+        }
+        while(l.size() < k)
+        {
+            l.push_back(NULL);
+        }
+        return l; 
+
+        
+        
+    }
+};
